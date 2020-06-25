@@ -721,6 +721,7 @@ class StyledText extends StatelessWidget {
         style: style.generateTextStyle(),
         textAlign: style.textAlign,
         textDirection: style.direction,
+        textScaleFactor: 1.0
       ),
     );
   }
