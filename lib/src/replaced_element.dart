@@ -224,6 +224,7 @@ class AudioContentElement extends ReplacedElement {
 
 /// [VideoContentElement] is a [ContentElement] with a video file as its content.
 class VideoContentElement extends ReplacedElement {
+  VideoPlayerController _controller;
   final List<String> src;
   final String poster;
   final bool showControls;
@@ -246,17 +247,17 @@ class VideoContentElement extends ReplacedElement {
     this.height,
     dom.Element node,
   }) : super(name: name, style: style, node: node);
-
+  
   @override
   Widget toWidget(RenderContext context) {
+    _controller = VideoPlayerController.network(src.first ?? "");  
     return Container(
       width: width ?? (height ?? 150) * 2,
       height: height ?? (width ?? 300) / 2,
       child: Chewie(
         controller: ChewieController(
-          videoPlayerController: VideoPlayerController.network(
-            src.first ?? "",
-          ),
+          videoPlayerController: _controller,
+          aspectRatio: _controller.value.aspectRatio,
           placeholder: poster != null
               ? Image.network(poster)
               : Container(color: Colors.black),
